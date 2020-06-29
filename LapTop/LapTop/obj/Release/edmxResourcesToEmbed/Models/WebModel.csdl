@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WEBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="makh" />
+    </Key>
+    <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="mk" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="makh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="diachi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="sdt" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="HoaDons" Relationship="Self.FK__HoaDon__thanhtie__2665ABE1" FromRole="Account" ToRole="HoaDon" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="UserAdmin" />
+    </Key>
+    <Property Name="UserAdmin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PassAdmin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CTHoaDon">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="Int32" Nullable="false" />
+    <Property Name="maHoaDon" Type="Int32" />
+    <Property Name="soluong" Type="Int32" Nullable="false" />
+    <Property Name="maSanPham" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HoaDon" Relationship="Self.FK__CTHoaDon__maHoaD__2B2A60FE" FromRole="CTHoaDon" ToRole="HoaDon" />
+    <NavigationProperty Name="SanPham" Relationship="Self.FK__CTHoaDon__maSanP__2C1E8537" FromRole="CTHoaDon" ToRole="SanPham" />
+  </EntityType>
+  <EntityType Name="DanhMuc">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="Int32" Nullable="false" />
+    <Property Name="ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Link" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SanPhams" Relationship="Self.FK__SanPham__maDanhM__7B7B4DDC" FromRole="DanhMuc" ToRole="SanPham" />
+  </EntityType>
+  <EntityType Name="HoaDon">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="Int32" Nullable="false" />
+    <Property Name="makh" Type="Int32" Nullable="false" />
+    <Property Name="ngaysuat" Type="DateTime" Precision="0" />
+    <Property Name="thanhtien" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__HoaDon__thanhtie__2665ABE1" FromRole="HoaDon" ToRole="Account" />
+    <NavigationProperty Name="CTHoaDons" Relationship="Self.FK__CTHoaDon__maHoaD__2B2A60FE" FromRole="HoaDon" ToRole="CTHoaDon" />
+    <Property Name="ngaydat" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ten" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="gia" Type="Double" Nullable="false" />
+    <Property Name="soluong" Type="Int32" Nullable="false" />
+    <Property Name="mota" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="maThuongHieu" Type="Int32" Nullable="false" />
+    <Property Name="maDanhMuc" Type="Int32" />
+    <Property Name="hinh" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ngaycapnhat" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CTHoaDons" Relationship="Self.FK__CTHoaDon__maSanP__2C1E8537" FromRole="SanPham" ToRole="CTHoaDon" />
+    <NavigationProperty Name="DanhMuc" Relationship="Self.FK__SanPham__maDanhM__7B7B4DDC" FromRole="SanPham" ToRole="DanhMuc" />
+    <NavigationProperty Name="thuongHieu" Relationship="Self.FK__SanPham__maThuon__7C6F7215" FromRole="SanPham" ToRole="thuongHieu" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="tendangnhap" />
+    </Key>
+    <Property Name="tendangnhap" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="matkhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="thuongHieu">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="Int32" Nullable="false" />
+    <Property Name="ten" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SanPhams" Relationship="Self.FK__SanPham__maThuon__7C6F7215" FromRole="thuongHieu" ToRole="SanPham" />
+  </EntityType>
+  <Association Name="FK__HoaDon__thanhtie__2665ABE1">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="makh" />
+      </Principal>
+      <Dependent Role="HoaDon">
+        <PropertyRef Name="makh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTHoaDon__maHoaD__2B2A60FE">
+    <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="0..1" />
+    <End Role="CTHoaDon" Type="Self.CTHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HoaDon">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="CTHoaDon">
+        <PropertyRef Name="maHoaDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTHoaDon__maSanP__2C1E8537">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="CTHoaDon" Type="Self.CTHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="CTHoaDon">
+        <PropertyRef Name="maSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SanPham__maDanhM__7B7B4DDC">
+    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="0..1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMuc">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="maDanhMuc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SanPham__maThuon__7C6F7215">
+    <End Role="thuongHieu" Type="Self.thuongHieu" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="thuongHieu">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="maThuongHieu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WEBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="CTHoaDons" EntityType="Self.CTHoaDon" />
+    <EntitySet Name="DanhMucs" EntityType="Self.DanhMuc" />
+    <EntitySet Name="HoaDons" EntityType="Self.HoaDon" />
+    <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+    <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
+    <EntitySet Name="thuongHieux" EntityType="Self.thuongHieu" />
+    <AssociationSet Name="FK__HoaDon__thanhtie__2665ABE1" Association="Self.FK__HoaDon__thanhtie__2665ABE1">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="HoaDon" EntitySet="HoaDons" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTHoaDon__maHoaD__2B2A60FE" Association="Self.FK__CTHoaDon__maHoaD__2B2A60FE">
+      <End Role="HoaDon" EntitySet="HoaDons" />
+      <End Role="CTHoaDon" EntitySet="CTHoaDons" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTHoaDon__maSanP__2C1E8537" Association="Self.FK__CTHoaDon__maSanP__2C1E8537">
+      <End Role="SanPham" EntitySet="SanPhams" />
+      <End Role="CTHoaDon" EntitySet="CTHoaDons" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SanPham__maDanhM__7B7B4DDC" Association="Self.FK__SanPham__maDanhM__7B7B4DDC">
+      <End Role="DanhMuc" EntitySet="DanhMucs" />
+      <End Role="SanPham" EntitySet="SanPhams" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SanPham__maThuon__7C6F7215" Association="Self.FK__SanPham__maThuon__7C6F7215">
+      <End Role="thuongHieu" EntitySet="thuongHieux" />
+      <End Role="SanPham" EntitySet="SanPhams" />
+    </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="WEBModel.sysdiagram" />
+  </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+</Schema>

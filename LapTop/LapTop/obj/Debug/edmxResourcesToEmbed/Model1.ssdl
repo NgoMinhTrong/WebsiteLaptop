@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WEBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="makh" />
+    </Key>
+    <Property Name="mail" Type="varchar" MaxLength="50" />
+    <Property Name="mk" Type="varchar" MaxLength="20" />
+    <Property Name="makh" Type="int" Nullable="false" />
+    <Property Name="hoten" Type="nvarchar" MaxLength="50" />
+    <Property Name="diachi" Type="nvarchar" MaxLength="200" />
+    <Property Name="sdt" Type="varchar" MaxLength="15" />
+    <Property Name="gioitinh" Type="bit" />
+  </EntityType>
+  <EntityType Name="CTHoaDon">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="int" Nullable="false" />
+    <Property Name="maHoaDon" Type="int" />
+    <Property Name="soluong" Type="int" Nullable="false" />
+    <Property Name="maSanPham" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DanhMuc">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="int" Nullable="false" />
+    <Property Name="ten" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="HoaDon">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="int" Nullable="false" />
+    <Property Name="makh" Type="int" Nullable="false" />
+    <Property Name="ngaysuat" Type="date" />
+    <Property Name="thanhtien" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ten" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="gia" Type="float" Nullable="false" />
+    <Property Name="soluong" Type="int" Nullable="false" />
+    <Property Name="mota" Type="nvarchar" MaxLength="200" />
+    <Property Name="maThuongHieu" Type="int" Nullable="false" />
+    <Property Name="maDanhMuc" Type="int" />
+    <Property Name="hinh" Type="varchar" MaxLength="100" />
+    <Property Name="ngaycapnhat" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="tendangnhap" />
+    </Key>
+    <Property Name="tendangnhap" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="matkhau" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="thuongHieu">
+    <Key>
+      <PropertyRef Name="ma" />
+    </Key>
+    <Property Name="ma" Type="int" Nullable="false" />
+    <Property Name="ten" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="FK__Account__makh__2E3BD7D3">
+    <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="HoaDon">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="makh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTHoaDon__maHoaD__16644E42">
+    <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="0..1" />
+    <End Role="CTHoaDon" Type="Self.CTHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HoaDon">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="CTHoaDon">
+        <PropertyRef Name="maHoaDon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CTHoaDon__maSanP__1758727B">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="CTHoaDon" Type="Self.CTHoaDon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="CTHoaDon">
+        <PropertyRef Name="maSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SanPham__maDanhM__0BE6BFCF">
+    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="0..1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMuc">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="maDanhMuc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SanPham__maThuon__0CDAE408">
+    <End Role="thuongHieu" Type="Self.thuongHieu" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="thuongHieu">
+        <PropertyRef Name="ma" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="maThuongHieu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WEBModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CTHoaDon" EntityType="Self.CTHoaDon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HoaDon" EntityType="Self.HoaDon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="thuongHieu" EntityType="Self.thuongHieu" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Account__makh__2E3BD7D3" Association="Self.FK__Account__makh__2E3BD7D3">
+      <End Role="HoaDon" EntitySet="HoaDon" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTHoaDon__maHoaD__16644E42" Association="Self.FK__CTHoaDon__maHoaD__16644E42">
+      <End Role="HoaDon" EntitySet="HoaDon" />
+      <End Role="CTHoaDon" EntitySet="CTHoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CTHoaDon__maSanP__1758727B" Association="Self.FK__CTHoaDon__maSanP__1758727B">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="CTHoaDon" EntitySet="CTHoaDon" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SanPham__maDanhM__0BE6BFCF" Association="Self.FK__SanPham__maDanhM__0BE6BFCF">
+      <End Role="DanhMuc" EntitySet="DanhMuc" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SanPham__maThuon__0CDAE408" Association="Self.FK__SanPham__maThuon__0CDAE408">
+      <End Role="thuongHieu" EntitySet="thuongHieu" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

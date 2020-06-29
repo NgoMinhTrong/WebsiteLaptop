@@ -1,0 +1,21 @@
+﻿.footer{
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    background: #3e3838;
+    color: #fff;
+}
+.nav-bg{
+    background-color: #330570;
+    box-shadow: 10px 10px 20px #ccc;
+}
+.bg-menu{
+    background-color: #530fad;
+    border-radius: 5px;
+
+}
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
